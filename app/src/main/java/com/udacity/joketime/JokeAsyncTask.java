@@ -1,6 +1,7 @@
 package com.udacity.joketime;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -8,9 +9,9 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.udacity.joketime.backend.jokeApi.JokeApi;
 
-import java.io.IOException;
-
 public class JokeAsyncTask extends AsyncTask<Void, Void, String> {
+
+    public static final String TAG = "JokeAsyncTask";
 
     public interface JokeListener {
 
@@ -47,8 +48,9 @@ public class JokeAsyncTask extends AsyncTask<Void, Void, String> {
 
         try {
             return jokeApiService.getJoke().execute().getJoke();
-        } catch (IOException e) {
-            return e.getMessage();
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to get joke", e);
+            return null;
         }
     }
 

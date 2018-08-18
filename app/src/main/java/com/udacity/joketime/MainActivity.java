@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements JokeAsyncTask.Jok
 
     @Override
     public void onJoke(String joke) {
+        if (joke == null) {
+            joke = getString(R.string.connection_error);
+        }
+
         Intent intent = new Intent(this, JokeActivity.class);
         intent.putExtra(JokeActivity.EXTRA_JOKE, joke);
         startActivity(intent);

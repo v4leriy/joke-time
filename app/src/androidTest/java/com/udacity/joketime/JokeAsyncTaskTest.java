@@ -25,13 +25,13 @@ public class JokeAsyncTaskTest {
 
         JokeAsyncTask.JokeListener listener = joke -> {
             System.out.println("Got joke: " + joke);
-            assertFalse(TextUtils.isEmpty(joke));
+            assertFalse("Failed to get joke", TextUtils.isEmpty(joke));
             signal.countDown();
         };
 
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         instrumentation.runOnMainSync(() -> new JokeAsyncTask(listener).execute());
 
-        assertTrue(signal.await(30, TimeUnit.SECONDS));
+        assertTrue("Timeout waiting for joke", signal.await(30, TimeUnit.SECONDS));
     }
 }
